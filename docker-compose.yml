@@ -1,0 +1,18 @@
+version: '2.3'
+
+services:
+  audio_transcriber:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${EXTERNAL_PORT:-8500}:8345"
+    volumes:
+      - huggingface_cache:/root/.cache/huggingface
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - PORT=8345
+
+volumes:
+  huggingface_cache:
